@@ -1,12 +1,15 @@
-import * as S from './styles';
-import * as zod from 'zod';
-import { HandPalm, Play } from 'phosphor-react';
-import { NewCycleForm } from './components/NewCycleForm';
-import { Countdown } from './components/Countdown';
-import { FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { HandPalm, Play } from 'phosphor-react';
+import type { ReactElement } from 'react';
 import { useContext } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
+import * as zod from 'zod';
+
 import { CyclesContext } from '~/contexts/CyclesContext';
+
+import { Countdown } from './components/Countdown';
+import { NewCycleForm } from './components/NewCycleForm';
+import * as S from './styles';
 
 const newCycleFormValitationSchema = zod.object({
 	task: zod.string().min(1, 'Informe a tarefa'),
@@ -18,7 +21,7 @@ const newCycleFormValitationSchema = zod.object({
 
 type INewCycleFormData = zod.infer<typeof newCycleFormValitationSchema>;
 
-export function Home() {
+export function Home(): ReactElement {
 	const { createNewCycle, interruptCurrentCycle, activeCycle } =
 		useContext(CyclesContext);
 	const newCycleForm = useForm<INewCycleFormData>({
@@ -34,7 +37,7 @@ export function Home() {
 	const task = watch('task');
 	const isSubmiteDisabled = !task;
 
-	function handleCreateNewCycle(data: INewCycleFormData) {
+	function handleCreateNewCycle(data: INewCycleFormData): void {
 		createNewCycle(data);
 		reset();
 	}

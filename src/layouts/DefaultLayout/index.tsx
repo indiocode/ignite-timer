@@ -1,8 +1,11 @@
-import * as S from './styles';
+import type { ReactElement } from 'react';
 import { Outlet } from 'react-router-dom';
+
 import { Header } from '~/components/Header';
 
-export function DefaultLayout() {
+import * as S from './styles';
+
+export function DefaultLayout(): ReactElement {
 	return (
 		<S.LayoutContainer>
 			<Header />

@@ -1,10 +1,12 @@
 import { differenceInSeconds } from 'date-fns';
-import { useContext } from 'react';
-import { useEffect } from 'react';
+import type { ReactElement } from 'react';
+import { useContext, useEffect } from 'react';
+
 import { CyclesContext } from '~/contexts/CyclesContext';
+
 import * as S from './styles';
 
-export function Countdown() {
+export function Countdown(): ReactElement {
 	const {
 		activeCycle,
 		markCurrentCycleAsFinished,

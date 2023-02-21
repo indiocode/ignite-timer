@@ -1,10 +1,13 @@
-import { useContext } from 'react';
-import { CyclesContext } from '~/contexts/CyclesContext';
 import { formatDistanceToNow } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
+import type { ReactElement } from 'react';
+import { useContext } from 'react';
+
+import { CyclesContext } from '~/contexts/CyclesContext';
+
 import * as S from './styles';
 
-export function History() {
+export function History(): ReactElement {
 	const { cycles } = useContext(CyclesContext);
 
 	return (

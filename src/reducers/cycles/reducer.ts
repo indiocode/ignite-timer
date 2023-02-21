@@ -1,5 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { produce } from 'immer';
+
+import type { Action } from './actions';
 import { ActionTypes } from './actions';
 
 export interface ICreateCycleData {
@@ -19,29 +21,14 @@ interface ICycleState {
 	activeCycleId: string | null;
 }
 
-export function cyclesReducer(state: ICycleState, action: any) {
+export function cyclesReducer(state: ICycleState, action: Action): ICycleState {
 	switch (action.type) {
 		case ActionTypes.ADD_NEW_CYCLE:
-			// return {
-			// 	...state,
-			// 	cycles: [...state.cycles, action.payload.newCycle],
-			// 	activeCycleId: action.payload.newCycle.id,
-			// };
 			return produce(state, (draft) => {
-				draft.cycles.push(action.payload.newCycle);
-				draft.activeCycleId = action.payload.newCycle.id;
+				draft.cycles.push(action.payload?.newCycle as ICycle);
+				draft.activeCycleId = action.payload?.newCycle.id as string;
 			});
 		case ActionTypes.INTERRUPT_CURRENT_CYCLE: {
-			// return {
-			// 	...state,
-			// 	cycles: state.cycles.map((cycle) =>
-			// 		cycle.id === state.activeCycleId
-			// 			? { ...cycle, interruptedDate: new Date() }
-			// 			: cycle,
-			// 	),
-			// 	activeCycleId: null,
-			// };
-
 			const currentCycleIndex = state.cycles.findIndex((cycle) => {
 				return cycle.id === state.activeCycleId;
 			});
@@ -56,16 +43,6 @@ export function cyclesReducer(state: ICycleState, action: any) {
 			});
 		}
 		case ActionTypes.MARK_CURRENT_CYCLE_AS_FINISHED: {
-			// return {
-			// 	...state,
-			// 	cycles: state.cycles.map((cycle) =>
-			// 		cycle.id === state.activeCycleId
-			// 			? { ...cycle, finishedDate: new Date() }
-			// 			: cycle,
-			// 	),
-			// 	activeCycleId: null,
-			// };
-
 			const currentCycleIndex = state.cycles.findIndex((cycle) => {
 				return cycle.id === state.activeCycleId;
 			});

@@ -1,9 +1,12 @@
-import * as S from './styles';
+import type { ReactElement } from 'react';
 import { useContext } from 'react';
 import { useFormContext } from 'react-hook-form';
+
 import { CyclesContext } from '~/contexts/CyclesContext';
 
-export function NewCycleForm() {
+import * as S from './styles';
+
+export function NewCycleForm(): ReactElement {
 	const { activeCycle, cycles } = useContext(CyclesContext);
 	const { register } = useFormContext();
 	const dataList = [...new Set(cycles)];

@@ -1,25 +1,15 @@
 /* eslint-disable no-unused-vars */
 import { differenceInSeconds } from 'date-fns';
-import {
-	createContext,
-	ReactNode,
-	useState,
-	Dispatch,
-	SetStateAction,
-	useReducer,
-	useEffect,
-} from 'react';
+import type { Dispatch, ReactElement, ReactNode, SetStateAction } from 'react';
+import { createContext, useEffect, useReducer, useState } from 'react';
+
 import {
 	addNewCycleAction,
 	interruptCurrentCycleAction,
 	markCurrentCycleAsFinishedAction,
 } from '~/reducers/cycles/actions';
-
-import {
-	cyclesReducer,
-	ICreateCycleData,
-	ICycle,
-} from '~/reducers/cycles/reducer';
+import type { ICreateCycleData, ICycle } from '~/reducers/cycles/reducer';
+import { cyclesReducer } from '~/reducers/cycles/reducer';
 
 interface ICyclesContextType {
 	cycles: ICycle[];
@@ -38,7 +28,9 @@ interface ICyclesProviderProps {
 	children: ReactNode;
 }
 
-export function CyclesContextProvider({ children }: ICyclesProviderProps) {
+export function CyclesContextProvider({
+	children,
+}: ICyclesProviderProps): ReactElement {
 	const [cyclesState, dispatch] = useReducer(
 		cyclesReducer,
 		{
@@ -72,11 +64,11 @@ export function CyclesContextProvider({ children }: ICyclesProviderProps) {
 		localStorage.setItem('@IGNITE_TIMER:CYCLES_STATE:1.0.0', stateJSON);
 	}, [cyclesState]);
 
-	function markCurrentCycleAsFinished() {
+	function markCurrentCycleAsFinished(): void {
 		dispatch(markCurrentCycleAsFinishedAction());
 	}
 
-	function createNewCycle(data: ICreateCycleData) {
+	function createNewCycle(data: ICreateCycleData): void {
 		const id = String(new Date().getTime());
 
 		const newCycle: ICycle = {
@@ -91,7 +83,7 @@ export function CyclesContextProvider({ children }: ICyclesProviderProps) {
 		setAmountSecondsPassed(0);
 	}
 
-	function interruptCurrentCycle() {
+	function interruptCurrentCycle(): void {
 		dispatch(interruptCurrentCycleAction());
 	}
 
